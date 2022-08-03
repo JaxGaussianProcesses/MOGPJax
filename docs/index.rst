@@ -27,7 +27,7 @@ For intuition of MOGPJax's exposed API, a simple example that derives the Gaussi
     :maxdepth: 1
     :caption: Examples
 
-    nbs/regression
+    nbs/gplvm
 
 .. toctree::
     :maxdepth: 1
