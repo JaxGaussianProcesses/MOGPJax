@@ -143,9 +143,7 @@ cython_debug/
 .idea/
 examples/_debug*
 examples/testing/*
-examples/*.ipynb
 _debug/
 workspace.code-workspace
-*.ipynb
 scratch_nbs/
 .DS_store
