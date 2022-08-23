@@ -20,19 +20,15 @@ class GPLVM:
     latent_dim: int
     jitter: tp.Optional[float] = DEFAULT_JITTER
 
-    @property
-    def params(self) -> dict:
-        default_key = get_defaults()["key"]
+    def _initialise_params(self, key: jnp.DeviceArray) -> tp.Dict:
+        """Initialise the GP's parameter set"""
         n_data = self.latent_process.likelihood.num_datapoints
         latent_prior = dx.MultivariateNormalDiag(
             loc=jnp.zeros(self.latent_dim), scale_diag=jnp.ones(self.latent_dim)
         )
-        X = latent_prior.sample(seed=default_key, sample_shape=(n_data,))
-        model_params = concat_dictionaries(
-            self.latent_process.prior.params,
-            {"likelihood": self.latent_process.likelihood.params},
-        )
-        add_parameter("latent", dx.Lambda(lambda x: x))
+        X = latent_prior.sample(seed=key, sample_shape=(n_data,))
+        model_params = self.latent_process._initialise_params(key)
+        add_parameter("latent", dx.Lambda(forward=lambda x: x, inverse=lambda x: x))
         return concat_dictionaries(model_params, {"latent": X})
 
     def marginal_log_likelihood(
