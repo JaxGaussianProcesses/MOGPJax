@@ -22,7 +22,9 @@ def test_gplvm(n_data, data_dim, latent_dim, kernel, jittable):
     latent_proces = gpx.Prior(kernel=kernel()) * gpx.Gaussian(num_datapoints=n_data)
     gplvm = mgpx.GPLVM(latent_process=latent_proces, latent_dim=latent_dim)
 
-    params, trainables, constrainers, unconstrainers = gpx.initialise(gplvm)
+    params, trainables, constrainers, unconstrainers = gpx.initialise(
+        gplvm, key=key
+    ).unpack()
     assert params["latent"].shape == (n_data, latent_dim)
 
     mll = gplvm.marginal_log_likelihood(
