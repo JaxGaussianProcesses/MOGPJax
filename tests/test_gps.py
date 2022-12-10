@@ -17,18 +17,16 @@ import mogpjax as mgpx
 def test_gplvm(n_data, data_dim, latent_dim, kernel, jittable):
     key = jr.PRNGKey(123)
     observations = jr.normal(key, shape=(n_data, data_dim))
-    observed_data = mgpx.UnsupervisedDataset(y=observations)
+    observed_data = mgpx.Dataset(y=observations)
 
     latent_proces = gpx.Prior(kernel=kernel()) * gpx.Gaussian(num_datapoints=n_data)
     gplvm = mgpx.GPLVM(latent_process=latent_proces, latent_dim=latent_dim)
 
-    params, trainables, constrainers, unconstrainers = gpx.initialise(
-        gplvm, key=key
-    ).unpack()
+    params, *_ = gpx.initialise(gplvm, key=key).unpack()
     assert params["latent"].shape == (n_data, latent_dim)
 
     mll = gplvm.marginal_log_likelihood(
-        observed_data, transformations=constrainers, negative=True
+        observed_data, negative=True
     )
     assert isinstance(mll, tp.Callable)
     if jittable:
