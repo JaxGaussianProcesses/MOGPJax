@@ -1,40 +1,52 @@
-<h1 align='center'>MOGPJax</h1>
-<h2 align='center'>Multi-output Gaussian processes in Jax.</h2>
+# [MOGPJax](https://github.com/JaxGaussianProcesses/MOGPJax)
 
-[![codecov](https://codecov.io/gh/daniel-dodd/mogpjax/branch/master/graph/badge.svg?token=DM1DRDASU2)](https://codecov.io/gh/daniel-dodd/mogpjax)
-[![CodeFactor](https://www.codefactor.io/repository/github/danieldodd/mogpjax/badge)](https://www.codefactor.io/repository/github/danieldodd/mogpjax)
-[![Documentation Status](https://readthedocs.org/projects/mogpjax/badge/?version=latest)](https://gpjax.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://badge.fury.io/py/MOGPJax.svg)](https://badge.fury.io/py/MOGPJax)
-[![Downloads](https://pepy.tech/badge/mogpjax)](https://pepy.tech/project/mogpjax)
 
+`MOGPJax` aims to provide a low-level interface to multi-output Gaussian process (GP) models in [`Jax`](https://github.com/google/jax), structured to give researchers maximum flexibility in extending the code to suit their own needs.
 
-[**Install guide**](#installation)
-| [**Documentation**](https://mogpjax.readthedocs.io/en/latest/)
+Currently the library is under major development.
 
-Through extending the GPJax package, MOGPJax aims to provide a low-level interface to multi-output Gaussian process (GP) models in [Jax](https://github.com/google/jax), structured to give researchers maximum flexibility in extending the code to suit their own needs.
+# Installation
 
-## Installation
+## Stable version
 
-### Stable version
-
-To install the latest stable version of MOGPJax run
+The latest stable version of `MOGPJax` can be installed via [`pip`](https://pip.pypa.io/en/stable/):
 
 ```bash
 pip install mogpjax
 ```
 
-### Development version
+> **Note**
+>
+> We recommend you check your installation version:
+> ```python
+> python -c 'import mogpjax; print(mogpjax.__version__)'
+> ```
 
-To install the latest, possibly unstable, version, the following steps should be followed. It is by no means compulsory, but we do advise that you do all of the below inside a virtual environment.
 
+
+## Development version
+> **Warning**
+>
+> This version is possibly unstable and may contain bugs. 
+
+Clone a copy of the repository to your local machine and run the setup configuration in development mode.
 ```bash
-git clone https://github.com/daniel-dodd/MOGPJax.git
-cd MOGPJax
-python setup.py develop
+git clone https://github.com/JaxGaussianProcesses/MOGPJax.git
+cd mogpjax
+python -m setup develop
 ```
 
-We then recommend you check your installation using the supplied unit tests.
-
-```python
-python -m pytest tests/
-```
+> **Note**
+>
+> We advise you create virtual environment before installing:
+> ```
+> conda create -n mogpjax_ex python=3.10.0
+> conda activate mogpjax_ex
+>  ```
+>
+> and recommend you check your installation passes the supplied unit tests:
+>
+> ```python
+> python -m pytest tests/
+> ```
