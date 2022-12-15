@@ -18,10 +18,10 @@ import jax.numpy as jnp
 from jaxtyping import Array, Float
 from typing import Optional
 
-from . import pytree
+from jaxutils import PyTree
 
-class Dataset(pytree.Pytree):
-    """MOGPJax Dataset class."""
+class Dataset(PyTree):
+    """Dataset class."""
 
     def __init__(
         self,

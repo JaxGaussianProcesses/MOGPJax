@@ -16,7 +16,13 @@
 from .types import Dataset
 from .gps import GPLVM
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
+__authors__ = "Daniel Dodd, Thomas Pinder"
+__emails__ = "d.dodd1@lancaster.ac.uk, tompinder@live.co.uk"
+__license__ = "Apache 2.0"
+__uri__ = "https://github.com/Daniel-Dodd/jax_linear_operator"
+__description__ = "A JaxLinOp library."
+__contributors__ = "https://github.com/Daniel-Dodd/jax_linear_operator/graphs/contributors"
 
 __all__ = [
     "GPLVM", 
