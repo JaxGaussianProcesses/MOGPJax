@@ -2,7 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/MOGPJax.svg)](https://badge.fury.io/py/MOGPJax)
 
-MOGPJax aims to provide a low-level interface to multi-output Gaussian process (GP) models in [Jax](https://github.com/google/jax), structured to give researchers maximum flexibility in extending the code to suit their own needs.
+`MOGPJax` aims to provide a low-level interface to multi-output Gaussian process (GP) models in [`Jax`](https://github.com/google/jax), structured to give researchers maximum flexibility in extending the code to suit their own needs.
 
 Currently the library is under major development.
 
