@@ -25,10 +25,10 @@ from jax.random import KeyArray
 from jaxtyping import Float, Array
 
 from .types import Dataset
-from . import pytree
+from jaxutils import PyTree
 
 
-class AbstractGP(pytree.Pytree):
+class AbstractGP(PyTree):
     pass
 
 class Prior(AbstractGP):
@@ -44,11 +44,7 @@ class NonConjugatePosterior(AbstractPosterior):
     pass
 
 
-
-
-
-
-class GPLVM(pytree.Pytree):
+class GPLVM(PyTree):
     """A Gaussian Process Latent Variable Model (GPLVM)."""
 
     def __init__(

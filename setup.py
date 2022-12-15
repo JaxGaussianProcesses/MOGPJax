@@ -1,67 +1,94 @@
-from setuptools import find_packages, setup
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import codecs
 import os
-import io
 import re
+from setuptools import find_packages, setup
 
+NAME = "jaxlinop"
 
-def parse_requirements_file(filename):
-    with open(filename, encoding="utf-8") as fid:
-        requires = [line.strip() for line in fid.readlines() if line]
-    return requires
+CLASSIFIERS = [
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
 
+INSTALL_REQUIRES = [
+    "jax",
+    "jaxlib",
+    "jaxtyping",
+    "distrax",
+    "jaxutils",
+    "jaxlinop",
+]
 
-# Optional Packages
-EXTRAS = {
+EXTRA_REQUIRE = {
     "dev": [
-        "black",
-        "isort",
-        "pylint",
-        "flake8",
-    ],
-    "tests": [
         "pytest",
-    ],
-    "docs": [
-        "furo",
+        "pre-commit",
+        "pytest-cov",
     ],
 }
 
-
-# Get version number (function from GPyTorch)
-def read(*names, **kwargs):
-    with io.open(
-        os.path.join(os.path.dirname(__file__), *names), encoding=kwargs.get("encoding", "utf8")
-    ) as fp:
-        return fp.read()
+GLOBAL_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
-def find_version(*file_paths):
-    version_file = read(*file_paths)
-    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M)
-    if version_match:
-        return version_match.group(1)
-    raise RuntimeError("Unable to find version string.")
+def read(*local_path: str) -> str:
+    """Read a file, given a local path.
+
+    Args:
+        *local_path (str): The local path to the file.
+
+    Returns:
+        str: The contents of the file.
+    """
+    with codecs.open(os.path.join(GLOBAL_PATH, *local_path), "rb", "utf-8") as f:
+        return f.read()
 
 
-version = find_version("mogpjax", "__init__.py")
-readme = open("README.md").read()
+# Read `__init__` file:
+init_local_path = os.path.join(NAME, "__init__.py")
+init_file = read(init_local_path)
 
 
-setup(
-    name="MOGPJax",
-    version=version,
-    author="Daniel Dodd, Thomas Pinder",
-    author_email="d.dodd1@lancaster.ac.uk, t.pinder2@lancaster.ac.uk",
-    packages=find_packages(".", exclude=["tests"]),
-    license="LICENSE",
-    description="Didactic multi-output Gaussian processes in Jax.",
-    long_description=readme,
-    long_description_content_type="text/markdown",
-    project_urls={
-        "Documentation": "https://mogpjax.readthedocs.io/en/latest/",
-        "Source": "https://github.com/daniel-dodd/MOGPJax",
-    },
-    install_requires=parse_requirements_file("requirements.txt"),
-    extras_require=EXTRAS,
-    keywords=["multi-output-gaussian-processes jax machine-learning bayesian"],
-)
+def find_meta(meta: str) -> str:
+    """Extract `__*meta*__` from the `__init__.py` file. This is useful for extracting __version__, __author__, etc.
+
+    Args:
+        meta (str): The meta to extract.
+
+    Returns:
+        str: The meta.
+    """
+
+    matches = re.search(
+        r"^__{meta}__ = ['\"]([^'\"]*)['\"]".format(meta=meta), init_file, re.M
+    )
+    if matches:
+        return matches.group(1)
+    raise RuntimeError("Unable to find __{meta}__ string.".format(meta=meta))
+
+
+if __name__ == "__main__":
+    setup(
+        name=NAME,
+        version=find_meta("version"),
+        author=find_meta("authors"),
+        author_email=find_meta("emails"),
+        maintainer=find_meta("authors"),
+        maintainer_email=find_meta("emails"),
+        url=find_meta("uri"),
+        license=find_meta("license"),
+        description=find_meta("description"),
+        long_description=read("README.md"),
+        long_description_content_type="text/markdown",
+        packages=find_packages(".", exclude=["tests"]),
+        package_data={NAME: ["py.typed"]},
+        include_package_data=True,
+        python_requires=">=3.6",
+        install_requires=INSTALL_REQUIRES,
+        extras_require=EXTRA_REQUIRE,
+        zip_safe=True,
+    )
