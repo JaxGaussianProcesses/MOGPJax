@@ -22,6 +22,7 @@ INSTALL_REQUIRES = [
     "distrax",
     "jaxutils",
     "jaxlinop",
+    "gpjax>=0.5.4"
 ]
 
 EXTRA_REQUIRE = {
