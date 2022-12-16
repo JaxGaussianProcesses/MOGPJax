@@ -13,7 +13,6 @@
 # limitations under the License.
 # ==============================================================================
 
-from .types import Dataset
 from .gps import GPLVM
 
 __version__ = "0.0.2"
@@ -26,5 +25,4 @@ __contributors__ = "https://github.com/Daniel-Dodd/jax_linear_operator/graphs/co
 
 __all__ = [
     "GPLVM", 
-    "Dataset",
 ]

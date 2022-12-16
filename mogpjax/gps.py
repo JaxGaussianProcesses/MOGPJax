@@ -14,19 +14,16 @@
 # ==============================================================================
 
 from typing import Dict, Callable
-
-import distrax as dx
-import gpjax as gpx
-import jax.numpy as jnp
-from gpjax.utils import concat_dictionaries
-from jax import vmap
-from jax.random import KeyArray
-
 from jaxtyping import Float, Array
 
-from .types import Dataset
-from jaxutils import PyTree
+import jax.numpy as jnp
+from jax import vmap
+from jax.random import KeyArray
+import distrax as dx
 
+import gpjax as gpx
+from gpjax.utils import concat_dictionaries
+from jaxutils import PyTree, Dataset
 
 class AbstractGP(PyTree):
     pass
