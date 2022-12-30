@@ -6,6 +6,7 @@ import jax.numpy as jnp
 import jax.random as jr
 import jaxkern.kernels as jk
 import pytest
+from jaxtyping import Array
 from jaxutils import Dataset
 
 import mogpjax as mgpx
@@ -35,7 +36,7 @@ def test_gplvm(n_data, data_dim, latent_dim, kernel, jittable):
     if jittable:
         mll = jax.jit(mll)
 
-    assert isinstance(mll(params), jnp.DeviceArray)
+    assert isinstance(mll(params), Array)
     assert mll(params).shape == ()
 
     mll_grad = jax.grad(mll)
