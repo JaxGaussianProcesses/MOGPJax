@@ -16,8 +16,8 @@ CLASSIFIERS = [
 ]
 
 INSTALL_REQUIRES = [
-    "jax",
-    "jaxlib",
+    "jax>=0.4.1",
+    "jaxlib>=0.4.1",
     "jaxtyping",
     "distrax",
     "jaxutils",
