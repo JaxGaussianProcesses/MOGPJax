@@ -4,21 +4,22 @@ import gpjax as gpx
 import jax
 import jax.numpy as jnp
 import jax.random as jr
+import jaxkern.kernels as jk
 import pytest
+from jaxtyping import Array
+from jaxutils import Dataset
 
 import mogpjax as mgpx
-
-from jaxutils import Dataset
 
 
 @pytest.mark.parametrize("n_data", [10, 100])
 @pytest.mark.parametrize("data_dim", [10, 20, 50])
 @pytest.mark.parametrize("latent_dim", [1, 2, 5])
-@pytest.mark.parametrize("kernel", [gpx.Matern12, gpx.Matern32, gpx.Matern52, gpx.RBF])
+@pytest.mark.parametrize("kernel", [jk.Matern12, jk.Matern32, jk.Matern52, jk.RBF])
 @pytest.mark.parametrize("jittable", [True, False])
 def test_gplvm(n_data, data_dim, latent_dim, kernel, jittable):
     key = jr.PRNGKey(123)
-    
+
     y = jr.normal(key, shape=(n_data, data_dim))
     D = Dataset(y=y)
 
@@ -31,11 +32,11 @@ def test_gplvm(n_data, data_dim, latent_dim, kernel, jittable):
     mll = gplvm.marginal_log_likelihood(D, negative=True)
 
     assert isinstance(mll, tp.Callable)
-    
+
     if jittable:
         mll = jax.jit(mll)
 
-    assert isinstance(mll(params), jnp.DeviceArray)
+    assert isinstance(mll(params), Array)
     assert mll(params).shape == ()
 
     mll_grad = jax.grad(mll)
